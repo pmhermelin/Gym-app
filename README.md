@@ -1,5 +1,10 @@
-# 🏋️ GymSystem
+<div dir="rtl">
 
+<div align="right">בס"ד</div>
+
+</div>
+
+# 🏋️ GymSystem
 > **מערכת לניהול חדר כושר**
 > פרויקט קבוצתי — **Apex Sharks**
 

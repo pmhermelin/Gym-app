@@ -86,118 +86,199 @@ master
 > ⚠️ **אין לבצע עבודה ישירות על `master`.**
 
 ---
+## 🔄 תהליך עבודה עם Git
 
-## 🔄 איך עובדים על דרישה?
+העבודה על הקוד מתבצעת לפי **תחומים**, ולא לפי REQ בודד.
 
-### 1️⃣ Jira
+כל חבר צוות עובד על ה־Branches שהוקצו לו, ו־Branch אחד יכול להכיל מספר REQs.
 
-מצא את ה־`REQ` שלך וקרא:
+### 1️⃣ לפני שמתחילים
 
-* את ה־Story
-* את הדרישה המלאה
-* את ה־Subtasks
-* את ה־Dependencies הרלוונטיים
-
-### 2️⃣ Confluence
-
-בדוק את **מסמך העיצוב הטכני**:
-
-* Classes
-* Attributes
-* Methods
-* קשרים בין מחלקות
-* Dependencies
-
-### 3️⃣ מעבר ל־Branch
+מעבר ל־`master` ועדכון הגרסה המקומית:
 
 <div dir="ltr">
 
 ```bash
-git checkout GymSystem
-git checkout <your-branch>
+git switch master
+git pull
 ```
 
-</div>
+> 💡 מומלץ להתחיל עבודה תמיד מ־`master` מעודכן.
 
-### 4️⃣ כתיבת הקוד
+### 2️⃣ עוברים ל־Branch שלך
 
-עבוד רק על החלק שהוקצה לך.
+לדוגמה, אם הענף שלך הוא:
 
-לפני הוספת שינוי שמשפיע על חלק אחר במערכת — **מתאמים עם חבר הצוות הרלוונטי**.
+<div dir="ltr">
 
-### 5️⃣ בדיקה
+```bash
+git switch yossi/progress-tracking
+```
 
-לפני Commit:
+אם ה־Branch קיים ב־GitHub אבל עדיין לא קיים אצלך במחשב:
 
-* הקוד מתקמפל
-* הדרישה עובדת
-* אין שגיאות חדשות
-* לא נשבר קוד קיים
+<div dir="ltr">
 
-### 6️⃣ Commit + Push
+```bash
+git switch --track origin/yossi/progress-tracking
+```
 
-השתמש בהודעת Commit ברורה שמתארת את השינוי.
+אם מדובר ב־Branch חדש שעדיין לא קיים ב־GitHub:
+
+<div dir="ltr">
+
+```bash
+git switch -c yossi/progress-tracking
+git push -u origin yossi/progress-tracking
+```
+
+### 3️⃣ עובדים רק על ה־Branch שלך
+
+מבצעים את הקוד של ה־REQ שהוקצה לך.
+
+> ⚠️ לא עובדים ישירות על `master`.
+
+### 4️⃣ בודקים מה השתנה
+
+בסיום העבודה או לפני Commit:
+
+<div dir="ltr">
+
+```bash
+git status
+```
+
+פקודה זו מציגה אילו קבצים השתנו.
+
+### 5️⃣ מוסיפים את השינויים
+
+אם רוצים להוסיף את כל השינויים:
 
 <div dir="ltr">
 
 ```bash
 git add .
-git commit -m "Implement appointment management"
+```
+
+או קובץ ספציפי:
+
+<div dir="ltr">
+
+```bash
+git add filename
+```
+
+### 6️⃣ מבצעים Commit
+
+בכל Commit מציינים את ה־`KAN` של ה־REQ שעליו עובדים.
+
+לדוגמה:
+
+<div dir="ltr">
+
+```bash
+git commit -m "KAN-17 Add progress record"
+```
+
+כך ניתן לקשר את ה־Commit למשימה המתאימה ב־Jira.
+
+> 📌 **חשוב:** ה־Branch הוא לפי תחום, אבל ה־`KAN` הוא לפי המשימה הספציפית שעליה עובדים.
+
+### 7️⃣ מעלים ל־GitHub
+
+<div dir="ltr">
+
+```bash
 git push
 ```
 
-</div>
+### 8️⃣ מסיימים את ה־REQ
 
-### 7️⃣ Pull Request
-
-לאחר סיום העבודה:
+לאחר שה־REQ הושלם:
 
 <div dir="ltr">
 
 ```text
-Branch → Pull Request → Code Review → Merge
+Your Branch
+     ↓
+Pull Request
+     ↓
+master
+```
+
+פותחים **Pull Request** מה־Branch שלך אל `master`.
+
+לאחר מכן מתבצע **Code Review**, ורק לאחר שהכול תקין מבצעים **Merge**.
+
+---
+
+## ⭐ מה הכי חשוב לזכור?
+
+<div dir="ltr">
+
+```text
+Branch
+  ↓
+Code
+  ↓
+git add
+  ↓
+Commit + KAN
+  ↓
+Push
+  ↓
+Pull Request
+  ↓
+Code Review
+  ↓
+Merge → master
+```
+
+---
+
+## 🌿 Branch לפי תחום, Commit לפי REQ
+
+החלוקה שלנו היא לפי **תחומי אחריות**, ולכן Branch אחד יכול להכיל מספר REQs.
+
+לדוגמה:
+
+<div dir="ltr">
+
+```text
+netanel/classes-scheduling
+│
+├── KAN-14 / REQ-007
+└── KAN-15 / REQ-008
 ```
 
 </div>
 
-אין לבצע **Merge עצמי** כאשר נדרש Review.
+במקרה כזה:
 
----
+* `netanel/classes-scheduling` — ה־Branch של התחום
+* `KAN-14` — המשימה שעליה עובדים עכשיו
+* `REQ-007` — הדרישה המתאימה
 
-## 📋 כללי עבודה
+לכן כל Commit צריך לציין את ה־`KAN` הספציפי של השינוי.
 
-| ✅ כלל           | 📌 משמעות                                          |
-| --------------- | -------------------------------------------------- |
-| 🚫 `master`     | לא עובדים ישירות על `master`                       |
-| 🤝 עבודה משותפת | לא משנים קוד של חבר צוות ללא תיאום                 |
-| 📝 Commits      | כל Commit מתאר בצורה ברורה את השינוי               |
-| 🧪 בדיקות       | לא מבצעים Push לפני שבודקים שהקוד עובד             |
-| 🔍 Review       | שינויים עוברים בדיקה לפני Merge בהתאם לתהליך הצוות |
-| ❓ חוסר ודאות    | אם משהו לא ברור — עוצרים ושואלים לפני שממשיכים     |
+לדוגמה:
 
----
+<div dir="ltr">
 
-## 👥 חלוקת עבודה
+```bash
+git commit -m "KAN-14 Implement class scheduling"
+```
 
-| 👤 חבר צוות         | 💻 תחומי אחריות                                            |
-| ------------------- | ---------------------------------------------------------- |
-| **נתנאל בבייב**     | Appointments · Class Registration · Classes Scheduling     |
-| **נוריאל אלטשטיין** | Identity · Staff Management                                |
-| **יוסי**            | Progress Tracking · Trainee Membership · Workout Nutrition |
+ובהמשך:
 
----
+<div dir="ltr">
 
-## 🧭 עקרונות הפרויקט
+```bash
+git commit -m "KAN-15 Add class availability"
+```
 
-**Jira מגדיר מה בונים.**
-**Confluence מגדיר איך מתכננים.**
-**Git מנהל את הקוד.**
-**Pull Request מאפשר Review.**
-**הצוות בונה את המערכת ביחד.**
+> 🦈 **Branch אחד יכול להכיל כמה REQs — אבל כל Commit צריך להיות ברור ולציין לאיזו משימת Jira הוא שייך.**
 
----
-
-<div align="center">
 
 ### 🦈 Apex Sharks
 

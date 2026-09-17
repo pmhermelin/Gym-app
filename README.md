@@ -283,12 +283,16 @@ git commit -m "KAN-15 Add class availability"
 ```
 
 > 🦈 **Branch אחד יכול להכיל כמה REQs — אבל כל Commit צריך להיות ברור ולציין לאיזו משימת Jira הוא שייך.**
+</div>
 
+---
 
-### 🦈 Apex Sharks
+<div align="center">
 
-**REQ אחרי REQ · Branch אחרי Branch · Commit אחרי Commit**
+**🦈 Apex Sharks**
 
-> 🚀 **בונים את GymSystem ביחד.**
+REQ אחרי REQ · Branch אחרי Branch · Commit אחרי Commit
+
+🚀 בונים את GymSystem ביחד.
 
 </div>

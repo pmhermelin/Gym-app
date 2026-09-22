@@ -14,6 +14,9 @@ namespace GymApp
         // מחולל אקראי (ישמש ליצירת סיסמאות)
         private Random random;
 
+        // המשתמש המחובר כרגע, או null אם אף אחד לא מחובר
+        private User? currentUser;
+
         public GymSystem()
         {
             users = new User[100];

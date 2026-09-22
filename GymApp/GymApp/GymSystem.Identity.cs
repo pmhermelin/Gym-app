@@ -135,5 +135,22 @@ namespace GymApp
             initialPassword = password;
             return newUser;
         }
+
+        // REQ-002: אימות מזהה וסיסמה, וקביעת המשתמש המחובר.
+        // מחזירה את המשתמש אם ההתחברות הצליחה, או null אם נכשלה -
+        // בלי לפרט אם הבעיה הייתה במזהה או בסיסמה, כדי לא לחשוף מידע.
+        public User? Login(string id, string password)
+        {
+            User? user = FindUserById(id);
+            if (user == null)
+                return null;
+            if (!user.CheckPassword(password))
+                return null;
+            if (!user.IsActive())
+                return null;
+
+            currentUser = user;
+            return user;
+        }
     }
 }

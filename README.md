@@ -5,101 +5,180 @@
 </div>
 
 # 🏋️ GymSystem
+
 > **מערכת לניהול חדר כושר**
 > פרויקט קבוצתי — **Apex Sharks**
 
-מערכת לניהול ותפעול חדר כושר, המפותחת כפרויקט קבוצתי תוך עבודה מסודרת לפי תהליך פיתוח מקצועי.
+מערכת לניהול ותפעול חדר כושר, המפותחת כפרויקט קבוצתי תוך שימוש ב־**Jira, Confluence ו־GitHub** ובהתאם לתהליך העבודה שהוגדר לפרויקט.
 
 ---
 
 ## 🎯 על הפרויקט
 
-הפרויקט כולל **19 דרישות מערכת**, החל מ־`REQ-001` ועד `REQ-019`.
+המערכת כוללת **19 דרישות פונקציונליות**, החל מ־`REQ-001` ועד `REQ-019`.
 
-לכל דרישה קיימת **Story ב־Jira**, ובמקרים הרלוונטיים גם **Subtasks** המגדירים את משימות הפיתוח.
+הדרישות מתועדות ב־**Confluence**, מנוהלות באמצעות **Jira**, וממומשות בקוד באמצעות **GitHub**.
 
-### 🔄 תהליך העבודה
+### 🧩 הכלים שבהם אנו משתמשים
+
+| כלי                 | תפקיד                                     |
+| ------------------- | ----------------------------------------- |
+| 📚 **Confluence**   | דרישות המערכת, מסמכי עיצוב ותכנון         |
+| 📋 **Jira**         | ניהול Stories, Subtasks ומעקב אחר התקדמות |
+| 💻 **GitHub**       | ניהול קוד המקור ועבודה עם Branches        |
+| 🔀 **Pull Request** | הגשת קוד לבדיקה לפני שילוב ב־`master`     |
+
+---
+
+## 🔄 תהליך העבודה
 
 <div dir="ltr">
 
 ```text
-Jira → Confluence → Branch → Code → Commit → Pull Request → Review → Merge
+Jira
+  ↓
+Confluence
+  ↓
+Branch
+  ↓
+Code
+  ↓
+Commit
+  ↓
+Push
+  ↓
+Pull Request
+  ↓
+Code Review
+  ↓
+Merge → master
+  ↓
+Jira → Done
 ```
 
 </div>
 
-**Jira** — מה המערכת צריכה לעשות
-**Confluence** — איך המערכת מתוכננת
-**Branch** — סביבת העבודה של המשימה
-**Code** — מימוש הדרישה
-**Pull Request** — הגשת השינוי לבדיקה
-**Review** — בדיקת הקוד
-**Merge** — שילוב הקוד בפרויקט
+### מה המשמעות של כל שלב?
+
+* **Jira** — מגדיר *מה* צריך לפתח.
+* **Confluence** — מגדיר את הדרישות, העיצוב והתכנון.
+* **Branch** — סביבת העבודה של חבר הצוות.
+* **Code** — מימוש הדרישה.
+* **Commit** — שמירת שינוי ברור ומקושר למשימה.
+* **Push** — העלאת העבודה ל־GitHub.
+* **Pull Request** — בקשה לשלב את העבודה ב־`master`.
+* **Code Review** — בדיקת הקוד.
+* **Merge** — שילוב הקוד בפרויקט.
+* **Jira → Done** — סגירת ה־Story לאחר השלמת העבודה.
 
 ---
 
 ## 🔗 קישורים חשובים
 
-| 🔎 משאב                                                                                                                                           | 📌 שימוש                               |
-| ------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
-| [📋 Jira Board](https://nuriel-altstein.atlassian.net/jira/software/projects/KAN/list?jql=project%20%3D%20KAN%20ORDER%20BY%20cf%5B10019%5D%20ASC) | מצב עדכני של כל דרישות המערכת והמשימות |
-| [📚 Confluence — Apex Sharks](https://nuriel-altstein.atlassian.net/wiki/spaces/AS/folder/1212417/Apex+Sharks)                                    | מסמכי הדרישות, העיצוב והתכנון          |
+| 🔎 משאב                                                                                                                                           | 📌 שימוש                       |
+| ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| [📋 Jira Board](https://nuriel-altstein.atlassian.net/jira/software/projects/KAN/list?jql=project%20%3D%20KAN%20ORDER%20BY%20cf%5B10019%5D%20ASC) | ניהול ומעקב אחר דרישות ומשימות |
+| [📚 Confluence — Apex Sharks](https://nuriel-altstein.atlassian.net/wiki/spaces/AS/folder/1212417/Apex+Sharks)                                    | דרישות, עיצוב ותכנון הפרויקט   |
 
-### 📚 מסמכים חשובים ב־Confluence
+### 📚 מסמכי הפרויקט
 
-מתוך ה־Space של **Apex Sharks**, המסמכים המרכזיים לעבודה השוטפת הם:
+המסמכים המרכזיים נמצאים ב־Confluence:
 
-* **מסמך דרישות ראשי** — פירוט דרישות המערכת `REQ-001` עד `REQ-019`
-* **מסמך עיצוב טכני — גרסה מורחבת** — Classes, Attributes, Methods וקשרים בין הרכיבים
-* **החלטות סופיות לפני תחילת הקידוד** — החלטות שהתקבלו לפני המימוש
+* **מסמך דרישות** — דרישות המערכת `REQ-001` עד `REQ-019`
+* **מסמך עיצוב טכני** — Classes, Attributes, Methods וקשרים בין הרכיבים
+* **מסמכי תכנון והחלטות** — החלטות שהתקבלו לפני תחילת המימוש
 
-> 💡 **עיקרון חשוב:**
-> ה־README משמש כמפת ניווט לפרויקט.
-> התוכן המלא של הדרישות והעיצוב נמצא ומתעדכן ב־Jira וב־Confluence.
+> 💡 **ה־README הוא מפת הניווט של הפרויקט.**
+> המידע המלא והמעודכן נמצא ב־Jira וב־Confluence.
 
 ---
 
-## 🌿 מבנה ה־Branches
+# 👥 חלוקת העבודה
+
+הפרויקט מפותח על ידי שלושה חברי צוות.
+
+המרצה אישר לעבוד עם **8 Branches לפי תחומי אחריות**, במקום ליצור Branch נפרד עבור כל אחת מ־19 הדרישות.
+
+### 🌿 Branches
 
 <div dir="ltr">
 
 ```text
 master
 │
-└── GymSystem
-    │
-    ├── netanel/appointments
-    ├── netanel/class-registration
-    ├── netanel/classes-scheduling
-    │
-    ├── nuriel/identity
-    ├── nuriel/staff-management
-    │
-    ├── yossi/progress-tracking
-    ├── yossi/trainee-membership
-    └── yossi/workout-nutrition
+├── netanel/appointments
+├── netanel/class-registration
+├── netanel/classes-scheduling
+│
+├── nuriel/identity
+├── nuriel/staff-management
+│
+├── yossi/progress-tracking
+├── yossi/trainee-membership
+└── yossi/workout-nutrition
 ```
 
 </div>
 
-### 📌 תפקיד ה־Branches
+### 👤 תחומי אחריות
 
-* `master` — גרסה יציבה של הפרויקט
-* `GymSystem` — ענף הפיתוח המרכזי
-* `feature branches` — עבודה על דרישות ופיצ'רים ספציפיים
+| חבר צוות            | Branches                                                         |
+| ------------------- | ---------------------------------------------------------------- |
+| **נתנאל בבייב**     | `appointments` · `class-registration` · `classes-scheduling`     |
+| **נוריאל אלטשטיין** | `identity` · `staff-management`                                  |
+| **Yossi Gerafi**    | `progress-tracking` · `trainee-membership` · `workout-nutrition` |
 
-> ⚠️ **אין לבצע עבודה ישירות על `master`.**
+> ⚠️ **`master` הוא הענף המרכזי של הפרויקט.**
+> אין לבצע עבודה ישירות על `master`.
 
 ---
-## 🔄 תהליך עבודה עם Git
 
-העבודה על הקוד מתבצעת לפי **תחומים**, ולא לפי REQ בודד.
+## 📋 חלוקת ה־REQs
 
-כל חבר צוות עובד על ה־Branches שהוקצו לו, ו־Branch אחד יכול להכיל מספר REQs.
+הפרויקט כולל 19 Stories, כאשר כל Story משויך לחבר צוות אחד.
 
-### 1️⃣ לפני שמתחילים
+> ⚠️ החלוקה הסופית חייבת לעמוד בדרישת המרצה של חלוקה הוגנת — **הפרש של לכל היותר Story אחד בין חברי הצוות**.
 
-מעבר ל־`master` ועדכון הגרסה המקומית:
+| חבר צוות            | Stories | REQs                                                                        |
+| ------------------- | ------: | --------------------------------------------------------------------------- |
+| **נוריאל אלטשטיין** |      5* | `REQ-001`, `REQ-002`, `REQ-003`, `REQ-004`, `REQ-006`                       |
+| **Yossi Gerafi**    |      7* | `REQ-005`, `REQ-009`, `REQ-010`, `REQ-011`, `REQ-012`, `REQ-015`, `REQ-019` |
+| **נתנאל בבייב**     |      7* | `REQ-007`, `REQ-008`, `REQ-013`, `REQ-014`, `REQ-016`, `REQ-017`, `REQ-018` |
+
+* **יש לאזן את החלוקה לפני שמציגים אותה כחלוקה סופית**, מכיוון שהחלוקה הנוכחית היא `5 / 7 / 7`.
+
+---
+
+# 🌿 איך עובדים עם ה־Branches?
+
+ה־Branches שלנו מחולקים לפי **תחומי אחריות**, ולא לפי כל REQ בנפרד.
+
+לכן:
+
+> **Branch אחד יכול להכיל מספר REQs.**
+
+לדוגמה:
+
+<div dir="ltr">
+
+```text
+netanel/classes-scheduling
+│
+├── REQ-007
+└── REQ-008
+```
+
+</div>
+
+המשמעות היא שה־Branch מייצג את תחום הפיתוח, בעוד שכל שינוי בקוד צריך להיות מקושר ל־Story המתאים ב־Jira.
+
+---
+
+# 🔧 תהליך עבודה עם Git
+
+## 1️⃣ עדכון `master`
+
+לפני תחילת עבודה:
 
 <div dir="ltr">
 
@@ -108,44 +187,45 @@ git switch master
 git pull
 ```
 
-> 💡 מומלץ להתחיל עבודה תמיד מ־`master` מעודכן.
+</div>
 
-### 2️⃣ עוברים ל־Branch שלך
+כך מתחילים מהגרסה העדכנית של הפרויקט.
 
-לדוגמה, אם הענף שלך הוא:
+---
 
-<div dir="ltr">
+## 2️⃣ מעבר ל־Branch שלך
 
-```bash
-git switch yossi/progress-tracking
-```
-
-אם ה־Branch קיים ב־GitHub אבל עדיין לא קיים אצלך במחשב:
+לדוגמה:
 
 <div dir="ltr">
 
 ```bash
-git switch --track origin/yossi/progress-tracking
+git switch netanel/class-registration
 ```
 
-אם מדובר ב־Branch חדש שעדיין לא קיים ב־GitHub:
+</div>
+
+אם ה־Branch קיים ב־GitHub אך עדיין לא קיים אצלך מקומית:
 
 <div dir="ltr">
 
 ```bash
-git switch -c yossi/progress-tracking
-git push -u origin yossi/progress-tracking
+git switch --track origin/netanel/class-registration
 ```
 
-### 3️⃣ עובדים רק על ה־Branch שלך
+</div>
 
-מבצעים את הקוד של ה־REQ שהוקצה לך.
+---
 
-> ⚠️ לא עובדים ישירות על `master`.
+## 3️⃣ עובדים על ה־REQ שהוקצה
 
-### 4️⃣ בודקים מה השתנה
+מבצעים את המימוש בהתאם ל־**Jira + Confluence**.
 
-בסיום העבודה או לפני Commit:
+> ⚠️ אין לבצע עבודה ישירות על `master`.
+
+---
+
+## 4️⃣ בדיקת השינויים
 
 <div dir="ltr">
 
@@ -153,11 +233,11 @@ git push -u origin yossi/progress-tracking
 git status
 ```
 
-פקודה זו מציגה אילו קבצים השתנו.
+</div>
 
-### 5️⃣ מוסיפים את השינויים
+---
 
-אם רוצים להוסיף את כל השינויים:
+## 5️⃣ הוספת השינויים
 
 <div dir="ltr">
 
@@ -165,7 +245,9 @@ git status
 git add .
 ```
 
-או קובץ ספציפי:
+</div>
+
+או עבור קובץ מסוים:
 
 <div dir="ltr">
 
@@ -173,23 +255,29 @@ git add .
 git add filename
 ```
 
-### 6️⃣ מבצעים Commit
+</div>
 
-בכל Commit מציינים את ה־`KAN` של ה־REQ שעליו עובדים.
+---
+
+## 6️⃣ Commit
+
+ה־Commit צריך להיות ברור ולכלול את **מפתח ה־Jira של ה־Story**.
 
 לדוגמה:
 
 <div dir="ltr">
 
 ```bash
-git commit -m "KAN-17 Add progress record"
+git commit -m "KAN-XX Implement class registration"
 ```
 
-כך ניתן לקשר את ה־Commit למשימה המתאימה ב־Jira.
+</div>
 
-> 📌 **חשוב:** ה־Branch הוא לפי תחום, אבל ה־`KAN` הוא לפי המשימה הספציפית שעליה עובדים.
+> 📌 מחליפים את `KAN-XX` במפתח ה־Jira האמיתי של ה־Story.
 
-### 7️⃣ מעלים ל־GitHub
+---
+
+## 7️⃣ Push
 
 <div dir="ltr">
 
@@ -197,9 +285,13 @@ git commit -m "KAN-17 Add progress record"
 git push
 ```
 
-### 8️⃣ מסיימים את ה־REQ
+</div>
 
-לאחר שה־REQ הושלם:
+---
+
+## 8️⃣ Pull Request
+
+לאחר השלמת העבודה:
 
 <div dir="ltr">
 
@@ -211,88 +303,104 @@ Pull Request
 master
 ```
 
-פותחים **Pull Request** מה־Branch שלך אל `master`.
+</div>
 
-לאחר מכן מתבצע **Code Review**, ורק לאחר שהכול תקין מבצעים **Merge**.
+פותחים **Pull Request אל `master`**.
+
+לאחר מכן:
+
+```text
+Pull Request
+     ↓
+Code Review
+     ↓
+Approval
+     ↓
+Merge
+```
 
 ---
 
-## ⭐ מה הכי חשוב לזכור?
+## 9️⃣ עדכון Jira
+
+לאחר שה־Story הושלם, נבדק ואוחד ל־`master`:
+
+```text
+Story → Done
+```
+
+---
+
+# 📝 כללי עבודה חשובים
+
+### ✅ כן
+
+* לעבוד רק על ה־Branch שהוקצה לך.
+* לעבוד בהתאם ל־Jira ול־Confluence.
+* לקשר Commits ל־Jira באמצעות מפתח ה־Story.
+* לבצע `push` ל־GitHub.
+* לפתוח Pull Request אל `master`.
+* לבצע Code Review לפני Merge.
+* לעדכן את ה־Story ב־Jira לאחר השלמת העבודה.
+
+### ❌ לא
+
+* לא לעבוד ישירות על `master`.
+* לא לבצע Merge ללא Review.
+* לא לבצע עבודה על Story שמוקצה לחבר אחר.
+* לא להמציא דרישות או לשנות את העיצוב ללא החלטה מתאימה.
+* לא להכניס קבצים מיותרים או קבצי מערכת ל־Repository.
+
+---
+
+# 🧹 Gitignore
+
+יש לוודא שקובץ `.gitignore` קיים בפרויקט לפני הוספת הקבצים ל־Git.
+
+אין להעלות ל־Repository קבצים ותיקיות שאינם חלק מקוד המקור, כגון קבצי IDE וקבצים שנוצרים אוטומטית במהלך הבנייה.
+
+---
+
+# ⭐ מה לזכור?
 
 <div dir="ltr">
 
 ```text
-Branch
+Jira
+  ↓
+What?
+  ↓
+Confluence
+  ↓
+How?
+  ↓
+Your Branch
   ↓
 Code
   ↓
-git add
-  ↓
-Commit + KAN
+Commit + Jira Key
   ↓
 Push
   ↓
-Pull Request
+Pull Request → master
   ↓
 Code Review
   ↓
-Merge → master
+Merge
+  ↓
+Jira → Done
 ```
 
----
-
-## 🌿 Branch לפי תחום, Commit לפי REQ
-
-החלוקה שלנו היא לפי **תחומי אחריות**, ולכן Branch אחד יכול להכיל מספר REQs.
-
-לדוגמה:
-
-<div dir="ltr">
-
-```text
-netanel/classes-scheduling
-│
-├── KAN-14 / REQ-007
-└── KAN-15 / REQ-008
-```
-
-</div>
-
-במקרה כזה:
-
-* `netanel/classes-scheduling` — ה־Branch של התחום
-* `KAN-14` — המשימה שעליה עובדים עכשיו
-* `REQ-007` — הדרישה המתאימה
-
-לכן כל Commit צריך לציין את ה־`KAN` הספציפי של השינוי.
-
-לדוגמה:
-
-<div dir="ltr">
-
-```bash
-git commit -m "KAN-14 Implement class scheduling"
-```
-
-ובהמשך:
-
-<div dir="ltr">
-
-```bash
-git commit -m "KAN-15 Add class availability"
-```
-
-> 🦈 **Branch אחד יכול להכיל כמה REQs — אבל כל Commit צריך להיות ברור ולציין לאיזו משימת Jira הוא שייך.**
 </div>
 
 ---
 
 <div align="center">
 
-**🦈 Apex Sharks**
+# 🦈 Apex Sharks
 
-REQ אחרי REQ · Branch אחרי Branch · Commit אחרי Commit
+**REQ אחרי REQ · Branch אחרי Branch · Commit אחרי Commit**
 
-🚀 בונים את GymSystem ביחד.
+### 🚀 בונים את GymSystem ביחד.
 
 </div>

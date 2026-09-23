@@ -7,6 +7,9 @@ namespace GymApp
         // מערך החשבונות: 100 תאים (לפי ההחלטות הסופיות)
         private User[] users;
 
+        // מערך העובדים: 20 תאים (לפי ההחלטות הסופיות)
+        private Employee[] employees;
+
         // מונים ליצירת מזהים
         private int nextEmployeeId;
         private int nextTraineeId;
@@ -20,6 +23,7 @@ namespace GymApp
         public GymSystem()
         {
             users = new User[100];
+            employees = new Employee[20];
             nextEmployeeId = 1;
             nextTraineeId = 1;
             random = new Random();
@@ -61,6 +65,28 @@ namespace GymApp
                 string id = "TRA" + nextTraineeId.ToString("D4");
                 nextTraineeId++;
                 return id;
+            }
+            return null;
+        }
+
+        // מחזירה את האינדקס הראשון הפנוי (null) במערך employees, או -1 אם מלא
+        private int FindFreeEmployeeIndex()
+        {
+            for (int i = 0; i < employees.Length; i++)
+            {
+                if (employees[i] == null)
+                    return i;
+            }
+            return -1;
+        }
+
+        // מחפשת עובד לפי מזהה חשבון ה-User שלו; מחזירה null אם לא נמצא
+        private Employee? FindEmployeeByUserId(string id)
+        {
+            for (int i = 0; i < employees.Length; i++)
+            {
+                if (employees[i] != null && employees[i].GetUser().GetId() == id)
+                    return employees[i];
             }
             return null;
         }

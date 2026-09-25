@@ -31,5 +31,47 @@ namespace GymApp
             employees[index] = employee;
             return true;
         }
+
+        // REQ-004: השבתת עובד קיים (מחיקה לוגית - דרך חשבון ה-User המקושר, בלי למחוק את הרשומה).
+        // מחזירה true בהצלחה, false אם העובד לא נמצא או שהוא כבר לא פעיל.
+        // שים לב: לא מטפלת במתאמנים שהיו משויכים אליו - זה תפקידה של ReassignTrainee, בנפרד.
+        public bool DeactivateEmployee(string employeeId)
+        {
+            if (employeeId == null || employeeId.Trim() == "")
+                return false;
+
+            Employee? employee = FindEmployeeByUserId(employeeId.Trim());
+            if (employee == null || !employee.IsActive())
+                return false;
+
+            employee.Deactivate();
+            return true;
+        }
+
+        // REQ-004: שיוך מתאמן קיים למאמן אחר (למשל אחרי שהמאמן הנוכחי הושבת).
+        // מחזירה true בהצלחה, false בכל כשל - כולל אם המאמן החדש לא קיים, לא פעיל, או שאינו מסוג Trainer.
+        public bool ReassignTrainee(string traineeId, string newTrainerId)
+        {
+            if (traineeId == null || traineeId.Trim() == "")
+                return false;
+            if (newTrainerId == null || newTrainerId.Trim() == "")
+                return false;
+
+            // 1. המתאמן חייב להיות קיים
+            Trainee? trainee = FindTraineeById(traineeId.Trim());
+            if (trainee == null)
+                return false;
+
+            // 2. המאמן החדש חייב להיות עובד קיים, פעיל, וחשבונו מסוג Trainer (אותה בדיקה כמו ב-AddTrainee)
+            Employee? newTrainer = FindEmployeeByUserId(newTrainerId.Trim());
+            if (newTrainer == null || !newTrainer.IsActive())
+                return false;
+            if (newTrainer.GetUser().GetUserType() != "Trainer")
+                return false;
+
+            // 3. רק עכשיו מעדכנים את השיוך
+            trainee.SetAssignedTrainer(newTrainer);
+            return true;
+        }
     }
 }

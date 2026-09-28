@@ -84,5 +84,19 @@ namespace GymApp
         {
             status = "Cancelled";
         }
+
+        // מציגה פרטי שיעור ומקומות פנויים, לפי הפורמט שאושר בביקורת הקוד של KAN-47 (PR #9):
+        // Class #CLS0001 | Type: Yoga | Trainer: <שם המאמן>
+        // Date: 2026-08-15 | Time: 18:00 | Capacity: 20 | Available: 4 | Status: Active
+        // Available = capacity - activeRegistrantCount, לא שלילי (לפי עקרון 7.16)
+        public override string ToString()
+        {
+            int available = capacity - activeRegistrantCount;
+            if (available < 0) available = 0;
+
+            return "Class #" + id + " | Type: " + activityType + " | Trainer: " + trainer.GetUser().GetFullName()
+                 + "\nDate: " + startDateTime.ToString("yyyy-MM-dd") + " | Time: " + startDateTime.ToString("HH:mm")
+                 + " | Capacity: " + capacity + " | Available: " + available + " | Status: " + status;
+        }
     }
 }

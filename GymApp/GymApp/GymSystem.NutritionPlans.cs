@@ -161,5 +161,23 @@ namespace GymApp
             trainee.SetNutritionPlan(plan);
             return true;
         }
+
+        // REQ-015: צפייה של המתאמן המחובר בתפריט התזונה שלו (לקריאה בלבד).
+        // Program מעבירה את מה שהחזירה GetCurrentTrainee() - לא מתאמן לפי מזהה שהוקלד.
+        // מחזירה את התפריט הפעיל, או null אם אין תפריט פעיל או שהמתאמן אינו המשתמש המחובר
+        public NutritionPlan? GetNutritionPlanFor(Trainee trainee)
+        {
+            // 1. רק מתאמן פעיל, ורק המתאמן שמחובר כרגע (אין לחשוף תפריט של מתאמן אחר)
+            if (trainee == null || !trainee.IsActive())
+                return null;
+            if (currentUser == null || trainee.GetUser() != currentUser)
+                return null;
+
+            // 2. מחזירים רק את ההפניה לתפריט הפעיל של אותו מתאמן
+            NutritionPlan? plan = trainee.GetNutritionPlan();
+            if (plan == null || !plan.IsActive())
+                return null;
+            return plan;
+        }
     }
 }

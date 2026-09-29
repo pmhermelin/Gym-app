@@ -8,8 +8,7 @@ namespace GymApp
         private User user;
         private Employee? assignedTrainer;   // מאמן פעיל משויך, או null
         private WorkoutPlan? activeWorkoutPlan;   // תוכנית אימונים פעילה, או null (מסמך העיצוב 6.3)
-
-        // הערה: השדה activeNutritionPlan (מסמך העיצוב 6.3) יתווסף יחד עם המחלקה NutritionPlan (KAN-19).
+        private NutritionPlan? activeNutritionPlan;   // תפריט תזונה פעיל, או null (מסמך העיצוב 6.3)
 
         // בנאי: יוצר מתאמן עם שיוך מאמן (אפשר גם בלי מאמן)
         public Trainee(User user, Employee? trainer = null)
@@ -36,6 +35,16 @@ namespace GymApp
         public void SetWorkoutPlan(WorkoutPlan plan)
         {
             activeWorkoutPlan = plan;
+        }
+
+        // גישה לתפריט התזונה הפעיל (null אם אין)
+        public NutritionPlan? GetNutritionPlan() { return activeNutritionPlan; }
+
+        // מפנה את המתאמן לתפריט הפעיל שלו. נקראת רק מתוך GymSystem אחרי פעולה מוצלחת,
+        // כך שלמתאמן יש תמיד הפניה אחת בלבד לתפריט פעיל
+        public void SetNutritionPlan(NutritionPlan plan)
+        {
+            activeNutritionPlan = plan;
         }
 
         // מבוססת על סטטוס חשבון ה-User, לא על שדה נפרד (מקור אמת יחיד)

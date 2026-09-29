@@ -120,5 +120,23 @@ namespace GymApp
             trainee.SetWorkoutPlan(plan);
             return true;
         }
+
+        // REQ-015: צפייה של המתאמן המחובר בתוכנית האימונים שלו (לקריאה בלבד).
+        // Program מעבירה את מה שהחזירה GetCurrentTrainee() - לא מתאמן לפי מזהה שהוקלד.
+        // מחזירה את התוכנית הפעילה, או null אם אין תוכנית פעילה או שהמתאמן אינו המשתמש המחובר
+        public WorkoutPlan? GetWorkoutPlanFor(Trainee trainee)
+        {
+            // 1. רק מתאמן פעיל, ורק המתאמן שמחובר כרגע (אין לחשוף תוכנית של מתאמן אחר)
+            if (trainee == null || !trainee.IsActive())
+                return null;
+            if (currentUser == null || trainee.GetUser() != currentUser)
+                return null;
+
+            // 2. מחזירים רק את ההפניה לתוכנית הפעילה של אותו מתאמן
+            WorkoutPlan? plan = trainee.GetWorkoutPlan();
+            if (plan == null || !plan.IsActive())
+                return null;
+            return plan;
+        }
     }
 }

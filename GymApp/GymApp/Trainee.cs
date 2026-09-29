@@ -7,10 +7,9 @@ namespace GymApp
         // שדות פרטיים: מתאמן אינו מחלקת בסיס של User - הוא מחזיק הפניה לחשבון (הרכבה, ללא ירושה)
         private User user;
         private Employee? assignedTrainer;   // מאמן פעיל משויך, או null
+        private WorkoutPlan? activeWorkoutPlan;   // תוכנית אימונים פעילה, או null (מסמך העיצוב 6.3)
 
-        // הערה: השדות activeWorkoutPlan ו-activeNutritionPlan (מסמך העיצוב 6.3)
-        // יתווספו יחד עם המחלקות WorkoutPlan ו-NutritionPlan (KAN-18 / KAN-19),
-        // כדי שהקוד יתקמפל כבר עכשיו בלי תלות במחלקות שעוד לא קיימות.
+        // הערה: השדה activeNutritionPlan (מסמך העיצוב 6.3) יתווסף יחד עם המחלקה NutritionPlan (KAN-19).
 
         // בנאי: יוצר מתאמן עם שיוך מאמן (אפשר גם בלי מאמן)
         public Trainee(User user, Employee? trainer = null)
@@ -27,6 +26,16 @@ namespace GymApp
         public void SetAssignedTrainer(Employee trainer)
         {
             assignedTrainer = trainer;
+        }
+
+        // גישה לתוכנית האימונים הפעילה (null אם אין)
+        public WorkoutPlan? GetWorkoutPlan() { return activeWorkoutPlan; }
+
+        // מפנה את המתאמן לתוכנית הפעילה שלו. נקראת רק מתוך GymSystem אחרי פעולה מוצלחת,
+        // כך שלמתאמן יש תמיד הפניה אחת בלבד לתוכנית פעילה
+        public void SetWorkoutPlan(WorkoutPlan plan)
+        {
+            activeWorkoutPlan = plan;
         }
 
         // מבוססת על סטטוס חשבון ה-User, לא על שדה נפרד (מקור אמת יחיד)

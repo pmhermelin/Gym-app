@@ -98,6 +98,15 @@ namespace GymApp
                  + "\nDate: " + startDateTime.ToString("yyyy-MM-dd") + " | Time: " + startDateTime.ToString("HH:mm")
                  + " | Capacity: " + capacity + " | Available: " + available + " | Status: " + status;
         }
-        // TODO(KAN-15): UpdateDetails(...) - נדרש לפי סעיף 6.5, ייושם יחד עם UpdateClass
+        public void UpdateDetails(string name, string activityType, DateTime startDateTime,
+                           int durationMinutes, Employee trainer, int capacity)
+        {
+            this.name = name;
+            this.activityType = activityType;
+            this.startDateTime = startDateTime;
+            this.durationMinutes = durationMinutes;
+            this.trainer = trainer;
+            this.capacity = capacity;
+        }
     }
 }

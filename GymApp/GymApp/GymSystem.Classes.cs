@@ -67,8 +67,17 @@ namespace GymApp
                     return true;
             }
 
-            // TODO (תלוי ב-KAN-20 / Appointment - עדיין לא קיים בקוד):
-            // להוסיף כאן סריקה של appointments פעילים של אותו trainer, לפי סעיף 7.7/7.20.
+            for (int i = 0; i < appointments.Length; i++)
+            {
+                Appointment? existingAppointment = appointments[i];
+                if (existingAppointment == null || existingAppointment.GetStatus() != "Scheduled")
+                    continue;
+                if (existingAppointment.GetTrainer() != trainer)
+                    continue;
+
+                if (TimesOverlap(start, durationMinutes, existingAppointment.GetStartDateTime(), existingAppointment.GetDurationMinutes()))
+                    return true;
+            }
 
             return false;
         }

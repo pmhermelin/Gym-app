@@ -37,7 +37,7 @@
         }
 
         public void Cancel() { status = "Cancelled"; }
-        
+
         public override string ToString()
         {
             return "Appointment #" + id + " | Trainer: " + trainer.GetUser().GetFullName()

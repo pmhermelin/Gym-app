@@ -14,7 +14,7 @@
             }
             return -1;
         }
-
+        
         private bool HasActiveRegistration(Trainee trainee, GymClass gymClass)
         {
             for (int i = 0; i < registrations.Length; i++)
@@ -26,6 +26,8 @@
             }
             return false;
         }
+
+
         // REQ-017: הרשמת מתאמן לשיעור עתידי. המונה גדל רק אחרי שמירה מוצלחת; בכל כשל שום דבר לא משתנה.
         public ClassRegistration? RegisterForClass(Trainee trainee, string classId)
         {
@@ -58,6 +60,41 @@
             registrations[index] = registration;
             gymClass.IncreaseRegistrantCount();
             return registration;
+        }
+
+        private ClassRegistration? FindRegistrationById(string id)
+        {
+            for (int i = 0; i < registrations.Length; i++)
+            {
+                ClassRegistration? existing = registrations[i];
+                if (existing != null && existing.GetId() == id)
+                    return existing;
+            }
+            return null;
+        }
+
+        // REQ-018: ביטול הרשמה עתידית של המתאמן. המונה קטן פעם אחת, רק אחרי ביטול מוצלח.
+        // הרשומה נשארת במערך בסטטוס Cancelled. בכל כשל שום דבר לא משתנה. אינה מבטלת פגישות.
+        public bool CancelRegistration(Trainee trainee, string registrationId)
+        {
+            if (trainee == null || registrationId == null || registrationId.Trim() == "")
+                return false;
+
+            ClassRegistration? registration = FindRegistrationById(registrationId.Trim());
+            if (registration == null || !registration.IsActive())
+                return false;
+            if (registration.GetTrainee() != trainee)
+                return false;
+
+            GymClass gymClass = registration.GetGymClass();
+            if (gymClass.GetStartDateTime() <= DateTime.Now)
+                return false;
+
+            if (!registration.Cancel())
+                return false;
+
+            gymClass.DecreaseRegistrantCount();
+            return true;
         }
     }
 }

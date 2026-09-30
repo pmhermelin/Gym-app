@@ -25,9 +25,12 @@
 
         // REQ-018: לוח אישי של המתאמן: הרשמות פעילות לשיעורים עתידיים ופגישות מתוכננות עתידיות,
         // ממוינות מהקרוב לרחוק. מחזירה כמה פריטים נכתבו בפועל (עד גבול המערך). לא משנה נתונים.
+        // הרשאה: רק המתאמן המחובר עצמו (אותה בדיקה כמו ב-GetWorkoutPlanFor / GetNutritionPlanFor). אחרת מוחזר 0.
         public int BuildTraineeSchedule(Trainee trainee, ScheduleItem[] results)
         {
             if (trainee == null || results == null)
+                return 0;
+            if (currentUser == null || trainee.GetUser() != currentUser)
                 return 0;
 
             int count = 0;

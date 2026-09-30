@@ -30,6 +30,14 @@
 
         public bool IsFutureActive() { return status == "Scheduled" && startDateTime > DateTime.Now; }
 
+        public void UpdateSchedule(DateTime startDateTime, int durationMinutes)
+        {
+            this.startDateTime = startDateTime;
+            this.durationMinutes = durationMinutes;
+        }
+
+        public void Cancel() { status = "Cancelled"; }
+
         public override string ToString()
         {
             return "Appointment #" + id + " | Trainer: " + trainer.GetUser().GetFullName()

@@ -45,11 +45,8 @@ namespace GymApp
         // בודקת אם למאמן הנתון יש שיעור פעיל שחופף לטווח הזמן המבוקש.
         // ignoredClassId מאפשר להתעלם משיעור מסוים (לשימוש עתידי ב-UpdateClass, KAN-15) - לא בשימוש כרגע ב-AddClass.
         //
-        // הערה חשובה על scope: לפי סעיף 7.7/7.20 המתודה אמורה לסרוק גם פגישות (appointments) פעילות של המאמן.
-        // מחלקת Appointment עדיין לא קיימת בקוד (שייכת ל-REQ-013 / KAN-20, שטרם מומשה - KAN-14 חוסמת אותה, לא להפך).
-        // בדומה לתבנית הקיימת ב-DeactivateEmployee (GymSystem.StaffManagement.cs, TODO לגבי בדיקת שיעורים עתידיים),
-        // המתודה סורקת כרגע רק שיעורים. יש להרחיב לסריקת appointments כאשר KAN-20 יתמזג למאסטר.
-        private bool TrainerHasConflict(Employee trainer, DateTime start, int durationMinutes, string? ignoredClassId)
+        // סורקת שיעורים פעילים ופגישות מתוכננות (Scheduled) של המאמן, לפי סעיף 7.7/7.20.
+        private bool TrainerHasConflict(Employee trainer, DateTime start, int durationMinutes, string? ignoredClassId, string? ignoredAppointmentId = null)
         {
             for (int i = 0; i < classes.Length; i++)
             {
@@ -71,6 +68,8 @@ namespace GymApp
             {
                 Appointment? existingAppointment = appointments[i];
                 if (existingAppointment == null || existingAppointment.GetStatus() != "Scheduled")
+                    continue;
+                if (existingAppointment.GetId() == ignoredAppointmentId)
                     continue;
                 if (existingAppointment.GetTrainer() != trainer)
                     continue;

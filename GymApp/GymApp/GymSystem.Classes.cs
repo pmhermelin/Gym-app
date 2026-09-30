@@ -30,7 +30,18 @@ namespace GymApp
             DateTime end2 = start2.AddMinutes(duration2);
             return start1 < end2 && start2 < end1;
         }
-        
+
+        private GymClass? FindClassById(string id)
+        {
+            for (int i = 0; i < classes.Length; i++)
+            {
+                if (classes[i] != null && classes[i].GetId() == id)
+                    return classes[i];
+            }
+
+            return null;
+        }
+
         // בודקת אם למאמן הנתון יש שיעור פעיל שחופף לטווח הזמן המבוקש.
         // ignoredClassId מאפשר להתעלם משיעור מסוים (לשימוש עתידי ב-UpdateClass, KAN-15) - לא בשימוש כרגע ב-AddClass.
         //
@@ -112,6 +123,51 @@ namespace GymApp
             GymClass gymClass = new GymClass(id, name.Trim(), activityType.Trim(), start, durationMinutes, trainer, capacity);
             classes[index] = gymClass;
             return gymClass;
+        }
+        public bool UpdateClass(string id, string name, string activityType, DateTime start,
+                         int durationMinutes, string trainerId, int capacity)
+        {
+            GymClass? gymClass = FindClassById(id);
+            if (gymClass == null || !gymClass.IsFutureActive())
+                return false;
+
+            if (name == null || name.Trim() == "")
+                return false;
+            if (activityType == null || activityType.Trim() == "")
+                return false;
+            if (start <= DateTime.Now)
+                return false;
+            if (durationMinutes <= 0)
+                return false;
+            if (capacity <= 0)
+                return false;
+            if (trainerId == null || trainerId.Trim() == "")
+                return false;
+
+            if (capacity < gymClass.GetActiveRegistrantCount())
+                return false;
+
+            Employee? trainer = FindEmployeeByUserId(trainerId.Trim());
+            if (trainer == null || !trainer.IsActive())
+                return false;
+            if (trainer.GetUser().GetUserType() != "Trainer")
+                return false;
+
+            if (TrainerHasConflict(trainer, start, durationMinutes, id))
+                return false;
+
+            gymClass.UpdateDetails(name.Trim(), activityType.Trim(), start, durationMinutes, trainer, capacity);
+            return true;
+        }
+        public bool CancelClass(string id)
+        {
+            GymClass? gymClass = FindClassById(id);
+            if (gymClass == null || !gymClass.IsFutureActive())
+                return false;
+
+            gymClass.Cancel();
+            return true;
+
         }
     }
 }

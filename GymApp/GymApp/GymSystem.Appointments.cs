@@ -15,8 +15,6 @@
             return -1;
         }
 
-        // TODO (תלוי ב-KAN-24 / ClassRegistration - עדיין לא קיים בקוד):
-        // להוסיף סריקה של הרשמות פעילות של המתאמן לשיעורים עתידיים, לפי סעיף 7.20.
         private bool TraineeHasConflict(Trainee trainee, DateTime start, int durationMinutes)
         {
             for (int i = 0; i < appointments.Length; i++)
@@ -28,6 +26,22 @@
                     continue;
 
                 if (TimesOverlap(start, durationMinutes, existing.GetStartDateTime(), existing.GetDurationMinutes()))
+                    return true;
+            }
+
+            for (int i = 0; i < registrations.Length; i++)
+            {
+                ClassRegistration? registration = registrations[i];
+                if (registration == null || !registration.IsActive())
+                    continue;
+                if (registration.GetTrainee() != trainee)
+                    continue;
+
+                GymClass registeredClass = registration.GetGymClass();
+                if (!registeredClass.IsFutureActive())
+                    continue;
+
+                if (TimesOverlap(start, durationMinutes, registeredClass.GetStartDateTime(), registeredClass.GetDurationMinutes()))
                     return true;
             }
             return false;

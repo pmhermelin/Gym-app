@@ -16,7 +16,7 @@
             this.registrationDate = DateTime.Now;
             this.status = "Active";
         }
-
+        
         public string GetId() { return id; }
         public Trainee GetTrainee() { return trainee; }
         public GymClass GetGymClass() { return gymClass; }
@@ -24,6 +24,16 @@
         public string GetStatus() { return status; }
 
         public bool IsActive() { return status == "Active"; }
+
+        // מבטלת פעם אחת בלבד: מחזירה true רק אם ההרשמה הייתה פעילה, והרשומה נשארת בסטטוס Cancelled.
+        public bool Cancel()
+        {
+            if (status != "Active")
+                return false;
+
+            status = "Cancelled";
+            return true;
+        }
 
         public override string ToString()
         {

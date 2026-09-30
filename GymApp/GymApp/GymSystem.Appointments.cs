@@ -17,12 +17,14 @@
 
         // TODO (תלוי ב-KAN-24 / ClassRegistration - עדיין לא קיים בקוד):
         // להוסיף סריקה של הרשמות פעילות של המתאמן לשיעורים עתידיים, לפי סעיף 7.20.
-        private bool TraineeHasConflict(Trainee trainee, DateTime start, int durationMinutes)
+        private bool TraineeHasConflict(Trainee trainee, DateTime start, int durationMinutes, string? ignoredAppointmentId = null)
         {
             for (int i = 0; i < appointments.Length; i++)
             {
                 Appointment? existing = appointments[i];
                 if (existing == null || existing.GetStatus() != "Scheduled")
+                    continue;
+                if (existing.GetId() == ignoredAppointmentId)
                     continue;
                 if (existing.GetTrainee() != trainee)
                     continue;
@@ -58,6 +60,58 @@
             Appointment appointment = new Appointment(id, trainer, trainee, start, duration);
             appointments[index] = appointment;
             return appointment;
+        }
+
+        private Appointment? FindAppointmentById(string id)
+        {
+            for (int i = 0; i < appointments.Length; i++)
+            {
+                Appointment? existing = appointments[i];
+                if (existing != null && existing.GetId() == id)
+                    return existing;
+            }
+            return null;
+        }
+
+        // REQ-014: עדכון פגישה עתידית של המאמן המחובר. בכל כשל הפגישה נשארת ללא שינוי.
+        public bool UpdateAppointment(string id, DateTime start, int duration)
+        {
+            if (id == null || id.Trim() == "")
+                return false;
+
+            Employee? trainer = GetCurrentEmployee();
+            Appointment? appointment = FindAppointmentById(id.Trim());
+            if (trainer == null || appointment == null)
+                return false;
+            if (!appointment.IsFutureActive() || appointment.GetTrainer() != trainer)
+                return false;
+            if (start <= DateTime.Now || duration <= 0)
+                return false;
+
+            if (TrainerHasConflict(trainer, start, duration, null, appointment.GetId()))
+                return false;
+            if (TraineeHasConflict(appointment.GetTrainee(), start, duration, appointment.GetId()))
+                return false;
+
+            appointment.UpdateSchedule(start, duration);
+            return true;
+        }
+
+        // REQ-014: ביטול פגישה עתידית של המאמן המחובר. הרשומה נשארת במערך בסטטוס Cancelled.
+        public bool CancelAppointment(string id)
+        {
+            if (id == null || id.Trim() == "")
+                return false;
+
+            Employee? trainer = GetCurrentEmployee();
+            Appointment? appointment = FindAppointmentById(id.Trim());
+            if (trainer == null || appointment == null)
+                return false;
+            if (!appointment.IsFutureActive() || appointment.GetTrainer() != trainer)
+                return false;
+
+            appointment.Cancel();
+            return true;
         }
     }
 }

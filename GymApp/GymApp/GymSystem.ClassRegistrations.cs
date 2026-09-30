@@ -26,7 +26,6 @@
             }
             return false;
         }
-        
         // REQ-017: הרשמת מתאמן לשיעור עתידי. המונה גדל רק אחרי שמירה מוצלחת; בכל כשל שום דבר לא משתנה.
         public ClassRegistration? RegisterForClass(Trainee trainee, string classId)
         {

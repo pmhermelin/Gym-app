@@ -152,5 +152,32 @@ namespace GymApp
             currentUser = user;
             return user;
         }
+
+        // מחזירה את ה-Employee של המשתמש המחובר, או null אם אין משתמש מחובר או שהוא אינו עובד.
+        // Program קוראת לה פעם אחת אחרי Login, ומעבירה את התוצאה למתודות שמקבלות Employee trainer
+        // (למשל SearchAssignedTrainees, CreateOrUpdateWorkoutPlan, CreateOrUpdateNutritionPlan)
+        public Employee? GetCurrentEmployee()
+        {
+            if (currentUser == null)
+                return null;
+            return FindEmployeeByUser(currentUser);
+        }
+
+        // מחזירה את ה-Trainee של המשתמש המחובר, או null אם אין משתמש מחובר או שהוא אינו מתאמן.
+        // Program קוראת לה פעם אחת אחרי Login, ומעבירה את התוצאה למתודות שמקבלות Trainee trainee
+        // (למשל GetWorkoutPlanFor, GetNutritionPlanFor)
+        public Trainee? GetCurrentTrainee()
+        {
+            if (currentUser == null)
+                return null;
+            return FindTraineeByUser(currentUser);
+        }
+
+        // התנתקות (מסמך העיצוב 8.5): מאפסת את המשתמש המחובר.
+        // אחרי הקריאה Program חוזרת לתפריט הראשי
+        public void Logout()
+        {
+            currentUser = null;
+        }
     }
 }
